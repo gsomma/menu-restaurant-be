@@ -5,7 +5,6 @@ import { JWT_CONSTANTS } from 'src/common/constants';
 import { UserModule } from 'src/modules/user.module';
 import { AuthService } from '../services/auth.service';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
-import { LocalStrategy } from '../auth/strategies/local.strategy';
 import { LoginController } from 'src/controllers/login.controller';
 import { AuthMiddleware } from 'src/auth/auth.middleware';
 
@@ -19,7 +18,7 @@ import { AuthMiddleware } from 'src/auth/auth.middleware';
     }),
   ],
   controllers: [LoginController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule implements NestModule {
@@ -32,7 +31,7 @@ export class AuthModule implements NestModule {
     consumer
       .apply(AuthMiddleware)
       .exclude(
-        { path: 'api/login', method: RequestMethod.ALL },
+        { path: 'api/auth/login', method: RequestMethod.ALL },
       )
       .forRoutes(
         '*'

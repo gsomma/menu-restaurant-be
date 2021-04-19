@@ -1,0 +1,32 @@
+{
+  "appenders": {
+    "consoleAppender": {
+      "type": "console",
+      "layout": {
+        "type": "colored",
+        "pattern": "%d [%p] - %c: %m"
+      }
+    },
+    "dateFile": {
+      "type": "dateFile",
+      "filename": "./logs/restaurant",
+      "pattern": ".yyyy-MM-dd.log",
+      "alwaysIncludePattern": true,
+      "daysToKeep": 240,
+      "compress": true,
+      "layout": {
+        "type": "pattern",
+        "pattern": "%d [%p] - %c: %m"
+      }
+    }
+  },
+  "categories": {
+    "default": {
+      "appenders": [
+        "consoleAppender",
+        "dateFile"
+      ],
+      "level": "debug"
+    }
+  }
+}
