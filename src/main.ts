@@ -7,6 +7,7 @@ import { Log4jsService } from './services/log4js.service';
 async function bootstrap() {
   const logger = new Log4jsService("DEBUG");
   const app = await NestFactory.create(AppModule, { cors: true, logger });
+  app.useGlobalPipes(new ValidationPipe());
 
   const options = new DocumentBuilder()
     .setTitle(process.env.APP_BE_TITLE)
@@ -20,11 +21,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
 
   SwaggerModule.setup('api', app, document);
-
-  const server = await app.listen(4226);  //process.env.APP_BE_LISTEN_PORT
-  app.useGlobalPipes(new ValidationPipe());
+  
+  await app.listen(4226);  //process.env.APP_BE_LISTEN_PORT
   // eliminato timeout di 2 minuti che provocava la recall della chiamata BE
-  server.setTimeout(0);
+  //const server = server.setTimeout(0);
 
   // DEFAULT
   // const app = await NestFactory.create(AppModule);

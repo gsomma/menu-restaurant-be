@@ -8,6 +8,8 @@ import { User } from './entities/user.entity';
 import { OrderModule } from './modules/order.module';
 import { UserModule } from './modules/user.module';
 import { LoginController } from './controllers/login.controller';
+import Subscriber from './events/subscriber';
+import { RequestContextModule } from 'nestjs-request-context';
 
 @Module({
   imports: [
@@ -19,9 +21,11 @@ import { LoginController } from './controllers/login.controller';
       password: 'postgres',
       database: 'restaurant',
       autoLoadEntities: true,
-      synchronize: true,
+      subscribers: [Subscriber],
       entities: [Order, User],
+      synchronize: true,
     }),
+    RequestContextModule,
     AuthModule,
     OrderModule,
     UserModule,

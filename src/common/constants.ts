@@ -1,9 +1,5 @@
 export const JWT_CONSTANTS = {
     SECRET: 'secretKey',
+    PASSWORD_BASE: 'pwd'
 };
 
-
-// export enum ROLE {
-//     USER = 'user',
-//     ADMIN = 'admin',
-// }

@@ -4,7 +4,7 @@ import { OrderStatus } from "src/enums/order-status.enum";
 import { OrderType } from "src/enums/order-type.enum";
 
 export class OrderDto {
-    @IsInt()
+    @IsInt({ message: 'Id deve essere numerico' })
     @IsOptional()
     id: number;
 

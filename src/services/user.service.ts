@@ -1,10 +1,12 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { JWT_CONSTANTS } from 'src/common/constants';
 import { CustomException } from 'src/common/customException.helper';
 import { MessageResponse } from 'src/common/messageResponse';
 import { UserDto } from 'src/dtos/user.dto';
 import { User } from 'src/entities/user.entity';
 import { Connection, EntityManager, QueryRunner } from 'typeorm';
 import { ConnectionManager, AbstractService } from './abstract.service';
+const base64 = require('nodejs-base64-converter');
 
 @Injectable()
 export class UserService extends AbstractService {
@@ -123,8 +125,10 @@ export class UserService extends AbstractService {
         //Inserimento
         //
         const user: User = this.createEntity(userDto);
-        user.password = "aaa";
-        this.logger.debug("UserService/Inserimento ordine");
+        if(!user.password) {
+          user.password = this.createPassword();
+        }
+        this.logger.debug("UserService/Inserimento utente");
         item = await queryRunner.manager.save(user);
         if (!item) {
           throw new CustomException(20, `Utente '${user.id}' non inserito`);
@@ -241,5 +245,8 @@ export class UserService extends AbstractService {
     return ret;
   };
 
+  private createPassword() {
+    return base64.encode(JWT_CONSTANTS.PASSWORD_BASE);
+  }
 
 }

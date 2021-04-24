@@ -13,7 +13,7 @@ import { OrderService } from '../services/order.service';
 @Controller('api/order')
 export class OrderController {
 
-    private readonly logger = new Logger("OrderController");
+    private readonly logger = new Logger(OrderController.name);
 
     constructor(private orderService: OrderService) { }
 

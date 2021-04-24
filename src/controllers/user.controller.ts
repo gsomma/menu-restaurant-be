@@ -13,7 +13,7 @@ import { UserService } from 'src/services/user.service';
 @Controller('api/user')
 export class UserController {
 
-    private readonly logger = new Logger("UserController");
+    private readonly logger = new Logger(UserController.name);
 
     constructor(private userService: UserService) { }
 
